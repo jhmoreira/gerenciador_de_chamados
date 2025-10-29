@@ -35,4 +35,28 @@ function salvarChamados($caminhoDoArquivo, $dados){
 
     return true;
 }
+
+function adicionarChamado($caminhoDoArquivo, $titulo, $prioridade, $setor, $previsao, $finalizado, $criado_em){
+    $tituloDoChamado = $titulo;
+    $prioridadeDoChamado = $prioridade;
+    $setorResponsavel = $setor;
+    $previsaoParaResolver = $previsao? $previsao :'';
+
+    $chamados = carregarChamados($caminhoDoArquivo);
+
+    $novoChamado = [
+        'id'=> uniqid(),
+        'titulo' => $tituloDoChamado,
+        'prioridade' => $prioridadeDoChamado,
+        'setor' => $setorResponsavel,
+        'previsao' => $previsaoParaResolver,
+        'criado_em' => date('d/m/Y H:i:s')
+    ];
+
+    $chamados = $novoChamado;
+    if(!salvarChamados($caminhoDoArquivo, $chamados)){
+        throw new RuntimeException('Erro ao salvar');
+    }
+    return $novoChamado;
+}
 ?>
