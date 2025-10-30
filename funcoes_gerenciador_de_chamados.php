@@ -59,4 +59,13 @@ function adicionarChamado($caminhoDoArquivo, $titulo, $prioridade, $setor, $prev
     }
     return $novoChamado;
 }
+
+function buscarPorId($chamados, $id){
+    foreach($chamados as $chamado => $atributo){
+        if($atributo['id'] === $id){
+            return $chamado;
+        } 
+    }
+    return null;
+}
 ?>
