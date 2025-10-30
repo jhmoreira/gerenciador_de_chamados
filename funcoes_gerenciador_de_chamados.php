@@ -78,4 +78,14 @@ function atualizarStatus($caminhoDoArquivo, $id){
     $chamados[$indice]['finalizado'] = empty($chamados[$indice]['finalizado']) ? true :false;
     return salvarChamados($caminhoDoArquivo, $chamados);
 }
+
+function excluirChamado($caminhoDoArquivo, $id){
+    $chamados = carregarChamados($caminhoDoArquivo);
+    $indice = buscarPorId($chamados, $id);
+    if($indice === null){
+        return false;
+    }
+    array_splice($chamados, $indice,1);
+    return salvarChamados($caminhoDoArquivo, array_values($chamados));
+}
 ?>
