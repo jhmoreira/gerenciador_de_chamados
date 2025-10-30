@@ -53,7 +53,7 @@ function adicionarChamado($caminhoDoArquivo, $titulo, $prioridade, $setor, $prev
         'criado_em' => date('d/m/Y H:i:s')
     ];
 
-    $chamados = $novoChamado;
+    $chamados[] = $novoChamado;
     if(!salvarChamados($caminhoDoArquivo, $chamados)){
         throw new RuntimeException('Erro ao salvar');
     }
@@ -67,5 +67,15 @@ function buscarPorId($chamados, $id){
         } 
     }
     return null;
+}
+
+function atualizarStatus($caminhoDoArquivo, $id){
+    $chamados = carregarChamados($caminhoDoArquivo);
+    $indice = buscarPorId($chamados, $id);
+    if($indice ===null){
+        return false;
+    }
+    $chamados[$indice]['finalizado'] = empty($chamados[$indice]['finalizado']) ? true :false;
+    return salvarChamados($caminhoDoArquivo, $chamados);
 }
 ?>
