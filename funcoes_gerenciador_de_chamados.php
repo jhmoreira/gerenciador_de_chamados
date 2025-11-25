@@ -11,9 +11,17 @@ function verificarArquivo($caminhoDoArquivo){
 
 function carregarChamados($caminhoDoArquivo){
 verificarArquivo($caminhoDoArquivo);
-$json = file_get_contents($caminhoDoArquivo);
-$conteudoDoArquivo = json_decode($json,true);
-return is_array($conteudoDoArquivo) ? $conteudoDoArquivo : [];
+$conteudo = file_get_contents($caminhoDoArquivo);
+
+if($conteudo === false || trim($conteudo)==''){
+    return [];
+}
+
+$dados = json_decode($conteudo, true);
+if(!is_array($dados)){
+    return [];
+}
+return $dados;
 }
 
 function salvarChamados($caminhoDoArquivo, $dados){
