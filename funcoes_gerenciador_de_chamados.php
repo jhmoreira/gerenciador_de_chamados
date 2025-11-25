@@ -61,9 +61,9 @@ function adicionarChamado($caminhoDoArquivo, $titulo, $prioridade, $setor, $prev
 }
 
 function buscarPorId($chamados, $id){
-    foreach($chamados as $chamado => $atributo){
-        if($atributo['id'] === $id){
-            return $chamado;
+    foreach($chamados as $indice => $item){
+        if(isset($item['id']) && $item['id'] === $id){
+            return $indice;
         } 
     }
     return null;
