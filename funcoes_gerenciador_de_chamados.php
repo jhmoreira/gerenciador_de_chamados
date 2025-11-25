@@ -25,10 +25,13 @@ return $dados;
 }
 
 function salvarChamados($caminhoDoArquivo, $dados){
-    $arquivoTemporario = tempnam(sys_get_temp_dir(),'chamado');
+    $json = json_encode($dados, JSON_PRETTY_PRINT);
+
+    if($json === false) return false;
+    $arquivoTemporario = tempnam(sys_get_temp_dir(), 'chamado_');
     if($arquivoTemporario === false) return false;
-    $gravarDados = file_put_contents($arquivoTemporario, json_encode($dados, JSON_PRETTY_PRINT));
-    if($gravarDados === false){
+
+    if(file_put_contents($arquivoTemporario, $json)===false){
         unlink($arquivoTemporario);
         return false;
     }
@@ -38,9 +41,9 @@ function salvarChamados($caminhoDoArquivo, $dados){
             unlink($arquivoTemporario);
             return false;
         }
-        return false;
     }
 
+    unlink($arquivoTemporario);
     return true;
 }
 
