@@ -87,7 +87,10 @@ function atualizarStatus($caminhoDoArquivo, $id){
     if($indice ===null){
         return null;
     }
-    $chamados[$indice]['finalizado'] = !empty($chamados[$indice]['finalizado']) ? true :false;
+    if(!array_key_exists('finalizado', $chamados[$indice])){
+        $chamados[$indice]['finalizado'] = false;
+    }
+    $chamados[$indice]['finalizado'] =!$chamados[$indice]['finalizado'];
     if( !salvarChamados($caminhoDoArquivo, $chamados)){
         return false;
     }
