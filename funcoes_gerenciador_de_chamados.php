@@ -57,11 +57,12 @@ function adicionarChamado($caminhoDoArquivo, $titulo, $prioridade, $setor, $prev
 
     $novoChamado = [
         'id'=> uniqid(),
-        'titulo' => $tituloDoChamado,
-        'prioridade' => $prioridadeDoChamado,
-        'setor' => $setorResponsavel,
-        'previsao' => $previsaoParaResolver,
-        'criado_em' => date('d/m/Y H:i:s')
+        'titulo' => $tituloDoChamado ?? '',
+        'prioridade' => $prioridadeDoChamado ?? '',
+        'setor' => $setorResponsavel ?? '',
+        'previsao' => $previsaoParaResolver ?? '',
+        'finalizado' => (bool)$finalizado,
+        'criado_em' => $criado_em ? $criado_em : date('d/m/Y H:i:s')
     ];
 
     $chamados[] = $novoChamado;
