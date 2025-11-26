@@ -98,9 +98,14 @@ function excluirChamado($caminhoDoArquivo, $id){
     $chamados = carregarChamados($caminhoDoArquivo);
     $indice = buscarPorId($chamados, $id);
     if($indice === null){
+        return null;
+    }
+    $removido = $chamados[$indice];
+
+    array_splice($chamados, $indice,1);
+    if(!salvarChamados($caminhoDoArquivo, array_values($chamados))){
         return false;
     }
-    array_splice($chamados, $indice,1);
-    return salvarChamados($caminhoDoArquivo, array_values($chamados));
+    return $removido;
 }
 ?>
