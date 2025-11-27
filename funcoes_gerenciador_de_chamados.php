@@ -43,7 +43,10 @@ function salvarChamados($caminhoDoArquivo, $dados){
         }
     }
 
-    unlink($arquivoTemporario);
+    if(file_exists($arquivoTemporario)){
+        unlink($arquivoTemporario);
+
+    }
     return true;
 }
 
