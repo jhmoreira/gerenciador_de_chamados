@@ -22,4 +22,35 @@ if($metodo == "GET"){
     echo json_encode($chamados);
     exit;
 }
+
+if($metodo ==="POST"){
+    $input = json_decode(file_get_contents('php://input'),true);
+
+    if(!$input){
+        echo json_encode([
+            "status" => "Erro",
+            "mensagem" => "JSON inválido ou vazio"
+        ]);
+        exit;
+    }
+
+    $camposObrigatorios = ['titulo', 'prioridade', 'setor','previsao'];
+
+    foreach($camposObrigatorios as $campo){
+        if(!isset($input[$campo]) ||trim($input[$campo])===""){
+            echo json_encode([
+            "status" => "Erro",
+            "mensagem" => "Campo obrigatório ausente: $campo"
+        ]);
+        exit;
+        }
+    }
+    $novoChamado = adicionarChamado($caminhoDoArquivo, $input['titulo'], $input['prioridade'], $input['setor'], $input['previsao'],false, null);
+    echo json_encode([
+            "status" => "Ok",
+            "mensagem" => "Chamado criado com sucesso",
+            "data" => $novoChamado
+        ]);
+        exit;
+}
 ?>
