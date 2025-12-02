@@ -85,4 +85,35 @@ if($metodo === "PUT"){
         ]);
         exit;
 }
+if($metodo === "DELETE"){
+    if(!isset($_GET['id'])){
+        echo json_encode([
+            "status" => "Erro",
+            "mensagem" => "Parâmetro ID obrigatório"
+        ]);
+        exit;
+    }
+    $id = $_GET['id'];
+    $resultado = excluirChamado($caminhoDoArquivo, $id);
+    if($resultado === null){
+        echo json_encode([
+            "status" => "Erro",
+            "mensagem" => "Chamado não encontrado"
+        ]);
+        exit;
+    }
+    if($resultado === false){
+        echo json_encode([
+            "status" => "Erro",
+            "mensagem" => "Falha ao salvar o arquivo"
+        ]);
+        exit;
+    }
+    echo json_encode([
+            "status" => "Ok",
+            "mensagem" => "Chamado removido com sucesso",
+            "data" => $resultado
+        ]);
+        exit;
+}
 ?>
