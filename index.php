@@ -1,5 +1,5 @@
 <?php
-header("Content_Type: application/json; charset=utf-8");
+header("Content-Type: application/json; charset=utf-8");
 require('funcoes_gerenciador_de_chamados.php');
 
 $caminhoDoArquivo = __DIR__."/chamados.json";
@@ -50,6 +50,38 @@ if($metodo ==="POST"){
             "status" => "Ok",
             "mensagem" => "Chamado criado com sucesso",
             "data" => $novoChamado
+        ]);
+        exit;
+}
+if($metodo === "PUT"){
+    if(!isset($_GET['id'])){
+        echo json_encode([
+            "status" => "Erro",
+            "mensagem" => "Parâmetro id é obrigatório"
+
+        ]);
+        exit;
+    }
+
+    $id = $_GET['id'];
+
+    $input = json_decode(file_get_contents('php://input'), true);
+    $valor = $input['finalizado']?? null;
+    $resultado = atualizarStatus($caminhoDoArquivo, $id);
+
+    if($resultado ===null){
+        echo json_encode([
+            "status" => "Erro",
+            "mensagem" => "Chamado não encontrado"
+
+        ]);
+        exit;
+    }
+    echo json_encode([
+            "status" => "Ok",
+            "mensagem" => "Status atualizado",
+            "data" => $resultado
+
         ]);
         exit;
 }
